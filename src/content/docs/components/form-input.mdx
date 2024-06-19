@@ -1,0 +1,99 @@
+---
+title: FormInput
+---
+
+import { Tabs, TabItem, Card } from "@astrojs/starlight/components";
+import FormInput from "../../../components/FormInput";
+
+## Basic
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <FormInput client:load label="Email" placeholder="Email" />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <FormInput label="Email" placeholder="Email" />
+    ```
+  </TabItem>
+</Tabs>
+
+## Validation
+
+### Value missing
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <div className="flex flex-col gap-6">
+        <FormInput
+          client:load
+          required
+          label="Email"
+          placeholder="Focus on me, and then blur"
+        />
+        <FormInput
+          client:load
+          required
+          validationMessage={{
+            valueMissing: "This is a custom `valueMissing` message",
+          }}
+          label="Email"
+          placeholder="Focus on me, and then blur"
+        />
+      </div>
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <FormInput required label="Email" placeholder="Email" />
+
+    <FormInput
+      required
+      validationMessage={{
+        valueMissing: "This is a custom `valueMissing` message",
+      }}
+      label="Email"
+      placeholder="Focus on me, and then blur"
+    />
+    ```
+
+  </TabItem>
+</Tabs>
+
+### Type mismatch
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <FormInput
+        client:load
+        label="Email"
+        type="email"
+        placeholder="Input an invalid email, e.g, abc"
+        validationMessage={{
+          typeMismatch: 'Invalid email'
+        }}
+      />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <FormInput
+      label="Email"
+      type="email"
+      placeholder="Input an invalid email, e.g, abc"
+      validationMessage={{
+        typeMismatch: 'Invalid email'
+      }}
+    />
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Use with form
+
+## Use as controlled component
