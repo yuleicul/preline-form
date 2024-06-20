@@ -13,16 +13,6 @@ export default defineConfig({
         // Path to your Tailwind base styles:
         "./src/tailwind.css",
       ],
-      head: [
-        {
-          tag: "script",
-          // https://github.com/htmlstreamofficial/preline/issues/61
-          content: `document.addEventListener('astro:page-load', async () => {
-				const preline = await import('preline/dist/preline.js')
-				preline.HSStaticMethods.autoInit()
-			})`,
-        },
-      ],
       social: {
         github: "https://github.com/withastro/starlight",
       },
