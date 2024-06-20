@@ -2,18 +2,30 @@ import FormInput from "@/components/FormInput";
 import { useState } from "react";
 
 const Controlled = () => {
-  const [email, setEmail] = useState("");
+  const [email1, setEmail1] = useState("");
+  const [email2, setEmail2] = useState("deafult@gamil.com");
 
   return (
     <>
-      <FormInput
-        label="Email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <div>
+        <FormInput
+          label="Email"
+          placeholder="Email"
+          value={email1}
+          onChange={(e) => setEmail1(e.target.value)}
+        />
+        <p>Email: {email1}</p>
+      </div>
 
-      <p>Email: {email}</p>
+      <div>
+        <FormInput
+          label="Email"
+          placeholder="Email"
+          value={email2}
+          onChange={(e) => setEmail2(e.target.value)}
+        />
+        <p>Email: {email2}</p>
+      </div>
     </>
   );
 };

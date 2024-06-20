@@ -247,18 +247,30 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
   </TabItem>
   <TabItem label="Code">
     ```jsx
-    const [email, setEmail] = useState("");
+    const [email1, setEmail1] = useState("");
+    const [email2, setEmail2] = useState("deafult@gamil.com");
 
     return (
       <>
-        <FormInput
-          label="Email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <div>
+          <FormInput
+            label="Email"
+            placeholder="Email"
+            value={email1}
+            onChange={(e) => setEmail1(e.target.value)}
+          />
+          <p>Email: {email1}</p>
+        </div>
 
-        <p>Email: {email}</p>
+        <div>
+          <FormInput
+            label="Email"
+            placeholder="Email"
+            value={email2}
+            onChange={(e) => setEmail2(e.target.value)}
+          />
+          <p>Email: {email2}</p>
+        </div>
       </>
     );
     ```
@@ -290,7 +302,13 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
 
     return (
       <form onSubmit={handleSubmit}>
-        <FormInput required name="email" label="Email" placeholder="Email" />
+        <FormInput
+          required
+          defaultValue="default@gmail.com"
+          name="email"
+          label="Email"
+          placeholder="Email"
+        />
         <FormInput
           required
           name="password"
@@ -298,7 +316,9 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
           label="Password"
           placeholder="Password"
         />
-        <button type="submit">Click here to submit (or press "Enter")</button>
+        <button type="submit" className="border">
+          Click here to submit (or press "Enter")
+        </button>
 
         <p>formDataObj: {JSON.stringify(formDataObj)}</p>
       </form>

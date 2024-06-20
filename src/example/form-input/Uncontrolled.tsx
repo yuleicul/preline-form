@@ -16,7 +16,13 @@ const Uncontrolled = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormInput required name="email" label="Email" placeholder="Email" />
+      <FormInput
+        required
+        defaultValue="default@gmail.com"
+        name="email"
+        label="Email"
+        placeholder="Email"
+      />
       <FormInput
         required
         name="password"
@@ -24,7 +30,9 @@ const Uncontrolled = () => {
         label="Password"
         placeholder="Password"
       />
-      <button type="submit">Click here to submit (or press "Enter")</button>
+      <button type="submit" className="border">
+        Click here to submit (or press "Enter")
+      </button>
 
       <p>formDataObj: {JSON.stringify(formDataObj)}</p>
     </form>
