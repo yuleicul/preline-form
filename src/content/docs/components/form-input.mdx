@@ -3,7 +3,10 @@ title: FormInput
 ---
 
 import { Tabs, TabItem, Card } from "@astrojs/starlight/components";
-import FormInput from "../../../components/FormInput";
+import FormInput from "@/components/FormInput";
+import ApiCallingValidation from "@/example/form-input/ApiCallingValidation";
+import Controlled from "@/example/form-input/Controlled";
+import Uncontrolled from "@/example/form-input/Uncontrolled";
 
 ## Basic
 
@@ -74,7 +77,7 @@ import FormInput from "../../../components/FormInput";
         type="email"
         placeholder="Input an invalid email, e.g, abc"
         validationMessage={{
-          typeMismatch: 'Invalid email'
+          typeMismatch: "Invalid email",
         }}
       />
     </Card>
@@ -86,7 +89,71 @@ import FormInput from "../../../components/FormInput";
       type="email"
       placeholder="Input an invalid email, e.g, abc"
       validationMessage={{
-        typeMismatch: 'Invalid email'
+        typeMismatch: "Invalid email",
+      }}
+    />
+    ```
+  </TabItem>
+</Tabs>
+
+### Pattern mismatch
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <FormInput
+        client:load
+        label="Chinese Name"
+        pattern="[\u4e00-\u9fa5]*"
+        placeholder="Input an invalid name, e.g, Yulei"
+        validationMessage={{
+          patternMismatch: "Invalid Chinese name",
+        }}
+      />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <FormInput
+      label="Chinese Name"
+      pattern="[\u4e00-\u9fa5]*"
+      placeholder="Input an invalid name, e.g, Yulei"
+      validationMessage={{
+        patternMismatch: "Invalid Chinese name",
+      }}
+    />
+    ```
+  </TabItem>
+</Tabs>
+
+### Length limit
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <FormInput
+        client:load
+        label="Password"
+        type="password"
+        minLength={6}
+        maxLength={20}
+        placeholder="The length of your password should between 6 to 20"
+        validationMessage={{
+          tooShort: "Too short",
+        }}
+      />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <FormInput
+      label="Password"
+      type="password"
+      minLength={6}
+      maxLength={20}
+      placeholder="The length of your password should between 6 to 20"
+      validationMessage={{
+        tooShort: "Too short",
       }}
     />
     ```
@@ -94,6 +161,149 @@ import FormInput from "../../../components/FormInput";
   </TabItem>
 </Tabs>
 
-## Use with form
+### Range underflow/overflow
 
-## Use as controlled component
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <FormInput
+        client:load
+        label="Quantity"
+        type="number"
+        min={1}
+        max={5}
+        placeholder="Quantity (between 1 and 5)"
+        validationMessage={{
+          rangeUnderflow: 'The minimum number is 1',
+          rangeOverflow:'The maximum number is 5'
+        }}
+      />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <FormInput
+      label="Quantity"
+      type="number"
+      min={1}
+      max={5}
+      placeholder="Quantity (between 1 and 5)"
+      validationMessage={{
+        rangeUnderflow: 'The minimum number is 1',
+        rangeOverflow:'The maximum number is 5'
+      }}
+    />
+    ```
+
+  </TabItem>
+</Tabs>
+
+### API-calling validation
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <ApiCallingValidation client:load />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    const inputRef = useRef<InputImperativeHandle>(null);
+    const [isCheckingEmail, setIsCheckingEmail] = useState(false);
+
+    const handleBlurEmail = async (email: string) => {
+      if (!email) return;
+
+      setIsCheckingEmail(true);
+      // Mock request
+      setTimeout(() => {
+        // Suppose request failed since the email is already used
+        setIsCheckingEmail(false);
+        inputRef.current?.setErrorMessage("This email address is already used");
+      }, 3000);
+    };
+
+    return (
+      <FormInput
+        ref={inputRef}
+        label="Email"
+        placeholder="Input an email, then blur"
+        loading={isCheckingEmail}
+        onBlur={(e) => handleBlurEmail(e.currentTarget.value)}
+      />
+    );
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Controlled
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <Controlled client:load />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    const [email, setEmail] = useState("");
+
+    return (
+      <>
+        <FormInput
+          label="Email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <p>Email: {email}</p>
+      </>
+    );
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Uncontrolled (with `<form>`)
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <Uncontrolled client:load />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    const [formDataObj, setFormDataObj] =
+      useState<Record<string, FormDataEntryValue>>();
+
+    const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(event.currentTarget);
+      const updates = Object.fromEntries(formData);
+
+      setFormDataObj(updates);
+    };
+
+    return (
+      <form onSubmit={handleSubmit}>
+        <FormInput required name="email" label="Email" placeholder="Email" />
+        <FormInput
+          required
+          name="password"
+          type="password"
+          label="Password"
+          placeholder="Password"
+        />
+        <button type="submit">Click here to submit (or press "Enter")</button>
+
+        <p>formDataObj: {JSON.stringify(formDataObj)}</p>
+      </form>
+    );
+    ```
+
+  </TabItem>
+</Tabs>
