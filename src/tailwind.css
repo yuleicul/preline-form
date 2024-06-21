@@ -13,4 +13,10 @@
   svg {
     margin-top: 0 !important;
   }
+
+  select {
+    /* Override theme selector styles */
+    background: none;
+    padding-left: 20px;
+  }
 }

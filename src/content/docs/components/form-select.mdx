@@ -1,0 +1,246 @@
+---
+title: FormSelect
+---
+
+import { Tabs, TabItem, Card } from "@astrojs/starlight/components";
+import FormSelect from "@/components/FormSelect";
+import Controlled from "@/example/form-select/Controlled";
+import Uncontrolled from "@/example/form-select/Uncontrolled";
+import PrelineAstro from "@/components/Preline.astro";
+
+<PrelineAstro client:load />
+
+## Basic
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <FormSelect
+        client:load
+        label="Month of Birth"
+        options={[
+          { label: "January", value: "1" },
+          { label: "February", value: "2" },
+          { label: "March", value: "3" },
+          { label: "April", value: "4" },
+          { label: "May", value: "5" },
+          { label: "June", value: "6" },
+          { label: "July", value: "7" },
+          { label: "August", value: "8" },
+          { label: "September", value: "9" },
+          { label: "October", value: "10" },
+          { label: "November", value: "11" },
+          { label: "December", value: "12" },
+        ]}
+      />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <FormSelect
+      label="Month of Birth"
+      options={[
+        { label: "January", value: "1" },
+        { label: "February", value: "2" },
+        { label: "March", value: "3" },
+        { label: "April", value: "4" },
+        { label: "May", value: "5" },
+        { label: "June", value: "6" },
+        { label: "July", value: "7" },
+        { label: "August", value: "8" },
+        { label: "September", value: "9" },
+        { label: "October", value: "10" },
+        { label: "November", value: "11" },
+        { label: "December", value: "12" },
+      ]}
+    />
+    ```
+  </TabItem>
+</Tabs>
+
+### Fixed height
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <FormSelect
+        client:load
+        label="Month of Birth"
+        dropDownMenuClassName="max-h-80 overflow-auto"
+        options={[
+          { label: "January", value: "1" },
+          { label: "February", value: "2" },
+          { label: "March", value: "3" },
+          { label: "April", value: "4" },
+          { label: "May", value: "5" },
+          { label: "June", value: "6" },
+          { label: "July", value: "7" },
+          { label: "August", value: "8" },
+          { label: "September", value: "9" },
+          { label: "October", value: "10" },
+          { label: "November", value: "11" },
+          { label: "December", value: "12" },
+        ]}
+      />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <FormSelect
+      label="Month of Birth"
+      dropDownMenuClassName="max-h-80 overflow-auto"
+      options={[
+        { label: "January", value: "1" },
+        { label: "February", value: "2" },
+        { label: "March", value: "3" },
+        { label: "April", value: "4" },
+        { label: "May", value: "5" },
+        { label: "June", value: "6" },
+        { label: "July", value: "7" },
+        { label: "August", value: "8" },
+        { label: "September", value: "9" },
+        { label: "October", value: "10" },
+        { label: "November", value: "11" },
+        { label: "December", value: "12" },
+      ]}
+    />
+    ```
+  </TabItem>
+</Tabs>
+
+## Controlled
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <Controlled client:load />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    const [value1, setValue1] = useState("");
+    const [value2, setValue2] = useState("3");
+
+    return (
+      <>
+        <div>
+          <FormSelect
+            label="Month of Birth"
+            value={value1}
+            onChange={setValue1}
+            options={[
+              { label: "January", value: "1" },
+              { label: "February", value: "2" },
+              { label: "March", value: "3" },
+              { label: "April", value: "4" },
+              { label: "May", value: "5" },
+              { label: "June", value: "6" },
+              { label: "July", value: "7" },
+              { label: "August", value: "8" },
+              { label: "September", value: "9" },
+              { label: "October", value: "10" },
+              { label: "November", value: "11" },
+              { label: "December", value: "12" },
+            ]}
+            dropDownMenuClassName="max-h-80 overflow-auto"
+          />
+
+          <p>Select: {value1}</p>
+        </div>
+
+        <div>
+          <FormSelect
+            label="Month of Birth (with default value)"
+            value={value2}
+            onChange={setValue2}
+            options={[
+              { label: "January", value: "1" },
+              { label: "February", value: "2" },
+              { label: "March", value: "3" },
+              { label: "April", value: "4" },
+              { label: "May", value: "5" },
+              { label: "June", value: "6" },
+              { label: "July", value: "7" },
+              { label: "August", value: "8" },
+              { label: "September", value: "9" },
+              { label: "October", value: "10" },
+              { label: "November", value: "11" },
+              { label: "December", value: "12" },
+            ]}
+            dropDownMenuClassName="max-h-80 overflow-auto"
+          />
+
+          <p>Select: {value2}</p>
+        </div>
+      </>
+    );
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Uncontrolled (with `<form>`)
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <Uncontrolled client:load />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+      const [formDataObj, setFormDataObj] =
+        useState<Record<string, FormDataEntryValue>>();
+
+      const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const updates = Object.fromEntries(formData);
+
+        setFormDataObj(updates);
+      };
+
+      return (
+        <form onSubmit={handleSubmit}>
+          <FormSelect
+            required
+            name="monthOfBirth"
+            label="Month of Birth"
+            options={[
+              { label: "January", value: "1" },
+              { label: "February", value: "2" },
+              { label: "March", value: "3" },
+              { label: "April", value: "4" },
+              { label: "May", value: "5" },
+              { label: "June", value: "6" },
+              { label: "July", value: "7" },
+              { label: "August", value: "8" },
+              { label: "September", value: "9" },
+              { label: "October", value: "10" },
+              { label: "November", value: "11" },
+              { label: "December", value: "12" },
+            ]}
+            dropDownMenuClassName="max-h-80 overflow-auto"
+          />
+          <FormSelect
+            name="whatWouldYouLikeToDrink"
+            label="What would you like to drink?"
+            defaultValue="tea"
+            options={[
+              { label: "Coffee", value: "coffee" },
+              { label: "Tea", value: "tea" },
+              { label: "Other", value: "other" },
+            ]}
+          />
+          <button type="submit" className="border">
+            Submit
+          </button>
+
+          <p>formDataObj: {JSON.stringify(formDataObj)}</p>
+        </form>
+      );
+    ```
+
+  </TabItem>
+</Tabs>

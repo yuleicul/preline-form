@@ -1,0 +1,189 @@
+---
+title: Checkbox
+---
+
+import { Tabs, TabItem, Card } from "@astrojs/starlight/components";
+import Checkbox from "@/components/Checkbox";
+import ControlledWithChecked from "@/example/checkbox/ControlledWithChecked";
+import Uncontrolled from "@/example/checkbox/Uncontrolled";
+import UncontrolledWithCustomValue from "@/example/checkbox/UncontrolledWithCustomValue";
+import PrelineAstro from "@/components/Preline.astro";
+
+<PrelineAstro client:load />
+
+## Basic
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <Checkbox label="Please check the box if you have read and understood the statement." />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <Checkbox label="Please check the box if you have read and understood the statement." />
+    ```
+  </TabItem>
+</Tabs>
+
+### Disabled
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <Checkbox
+        label="Please check the box if you have read and understood the statement."
+        disabled={true}
+      />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <Checkbox
+      label="Please check the box if you have read and understood the statement."
+      disabled={true}
+    />
+    ```
+  </TabItem>
+</Tabs>
+
+## Controlled
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <ControlledWithChecked client:load />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx "checked=" "e.target.checked"
+    const [checked1, setChecked1] = useState<boolean>();
+    const [checked2, setChecked2] = useState(true);
+
+    return (
+      <>
+        <div>
+          <Checkbox
+            checked={checked1}
+            onChange={(e) => setChecked1(e.target.checked)}
+            label="Please check the box if you have read and understood the statement."
+          />
+
+          <p>Checked: {JSON.stringify(checked1)}</p>
+        </div>
+
+        <div>
+          <Checkbox
+            checked={checked2}
+            onChange={(e) => setChecked2(e.target.checked)}
+            label="Please check the box if you have read and understood the statement."
+          />
+
+          <p>Checked: {JSON.stringify(checked2)}</p>
+        </div>
+      </>
+    );
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Uncontrolled (with `<form>`)
+
+### Uncontrolled with build-in value `'on'`
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <Uncontrolled client:load />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+      const [formDataObj, setFormDataObj] =
+        useState<Record<string, FormDataEntryValue>>();
+
+      const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const updates = Object.fromEntries(formData);
+
+        setFormDataObj(updates);
+      };
+
+      return (
+        <form onSubmit={handleSubmit}>
+          <Checkbox
+            required
+            name="statementReadToggle"
+            label="Please check the box if you have read and understood the statement."
+          />
+
+          <Checkbox
+            defaultChecked
+            name="strawberryLoverToggle"
+            label="Please check the box if you like strawberries."
+          />
+
+          <button type="submit" className="border">
+            Submit
+          </button>
+
+          <p>formDataObj: {JSON.stringify(formDataObj)}</p>
+        </form>
+      );
+    ```
+
+  </TabItem>
+</Tabs>
+
+### Uncontrolled with custom value
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <UncontrolledWithCustomValue client:load />
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx "value="yes""
+      const [formDataObj, setFormDataObj] =
+        useState<Record<string, FormDataEntryValue>>();
+
+      const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const updates = Object.fromEntries(formData);
+
+        setFormDataObj(updates);
+      };
+
+      return (
+        <form onSubmit={handleSubmit}>
+          <Checkbox
+            required
+            value="yes"
+            name="statementReadToggle"
+            label="Please check the box if you have read and understood the statement."
+          />
+
+          <Checkbox
+            defaultChecked
+            value="yes"
+            name="strawberryLoverToggle"
+            label="Please check the box if you like strawberries."
+          />
+
+          <button type="submit" className="border">
+            Submit
+          </button>
+
+          <p>formDataObj: {JSON.stringify(formDataObj)}</p>
+        </form>
+      );
+    ```
+
+  </TabItem>
+</Tabs>
