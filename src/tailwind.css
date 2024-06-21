@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* https://tailwindcss.com/docs/preflight */
+
 @layer base {
-  /* https://tailwindcss.com/docs/preflight */
+  :root[data-theme="light"] {
+    --sl-color-accent: #009188;
+  }
 
   button {
     background-color: unset;
