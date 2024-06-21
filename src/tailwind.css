@@ -14,10 +14,6 @@
     cursor: pointer;
   }
 
-  svg {
-    margin-top: 0 !important;
-  }
-
   select {
     /* Override theme selector styles */
     background: none;

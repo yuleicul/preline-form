@@ -1,12 +1,12 @@
-import FormInput from "@/components/FormInput";
 import { useState } from "react";
+import FormInput from "@/components/FormInput";
 
 const Controlled = () => {
   const [email1, setEmail1] = useState("");
   const [email2, setEmail2] = useState("deafult@gamil.com");
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <div>
         <FormInput
           label="Email"
@@ -26,7 +26,7 @@ const Controlled = () => {
         />
         <p>Email: {email2}</p>
       </div>
-    </>
+    </div>
   );
 };
 

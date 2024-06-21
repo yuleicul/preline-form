@@ -2,22 +2,27 @@
 title: FormInput
 ---
 
-import { Tabs, TabItem, Card } from "@astrojs/starlight/components";
+import { Tabs, TabItem, Card, Code } from "@astrojs/starlight/components";
 import FormInput from "@/components/FormInput";
 import ApiCallingValidation from "@/example/form-input/ApiCallingValidation";
+import ApiCallingValidationRaw from "@/example/form-input/ApiCallingValidation?raw";
 import Controlled from "@/example/form-input/Controlled";
+import ControlledRaw from "@/example/form-input/Controlled?raw";
 import Uncontrolled from "@/example/form-input/Uncontrolled";
+import UncontrolledRaw from "@/example/form-input/Uncontrolled?raw";
 
 ## Basic
 
 <Tabs>
   <TabItem label="Preview">
     <Card>
-      <FormInput client:load label="Email" placeholder="Email" />
+      <div class="not-content">
+        <FormInput client:load label="Email" placeholder="Email" />
+      </div>
     </Card>
   </TabItem>
   <TabItem label="Code">
-    ```jsx
+    ```tsx
     <FormInput label="Email" placeholder="Email" />
     ```
   </TabItem>
@@ -30,27 +35,29 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
 <Tabs>
   <TabItem label="Preview">
     <Card>
-      <div className="flex flex-col gap-6">
-        <FormInput
-          client:load
-          required
-          label="Email"
-          placeholder="Focus on me, and then blur"
-        />
-        <FormInput
-          client:load
-          required
-          validationMessage={{
-            valueMissing: "This is a custom `valueMissing` message",
-          }}
-          label="Email"
-          placeholder="Focus on me, and then blur"
-        />
+      <div class="not-content">
+        <div className="flex flex-col gap-6">
+          <FormInput
+            client:load
+            required
+            label="Email"
+            placeholder="Focus on me, and then blur"
+          />
+          <FormInput
+            client:load
+            required
+            validationMessage={{
+              valueMissing: "This is a custom `valueMissing` message",
+            }}
+            label="Email"
+            placeholder="Focus on me, and then blur"
+          />
+        </div>
       </div>
     </Card>
   </TabItem>
   <TabItem label="Code">
-    ```jsx
+    ```tsx
     <FormInput required label="Email" placeholder="Email" />
 
     <FormInput
@@ -71,19 +78,21 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
 <Tabs>
   <TabItem label="Preview">
     <Card>
-      <FormInput
-        client:load
-        label="Email"
-        type="email"
-        placeholder="Input an invalid email, e.g, abc"
-        validationMessage={{
-          typeMismatch: "Invalid email",
-        }}
-      />
+      <div class="not-content">
+        <FormInput
+          client:load
+          label="Email"
+          type="email"
+          placeholder="Input an invalid email, e.g, abc"
+          validationMessage={{
+            typeMismatch: "Invalid email",
+          }}
+        />
+      </div>
     </Card>
   </TabItem>
   <TabItem label="Code">
-    ```jsx
+    ```tsx
     <FormInput
       label="Email"
       type="email"
@@ -101,19 +110,21 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
 <Tabs>
   <TabItem label="Preview">
     <Card>
-      <FormInput
-        client:load
-        label="Chinese Name"
-        pattern="[\u4e00-\u9fa5]*"
-        placeholder="Input an invalid name, e.g, Yulei"
-        validationMessage={{
-          patternMismatch: "Invalid Chinese name",
-        }}
-      />
+      <div class="not-content">
+        <FormInput
+          client:load
+          label="Chinese Name"
+          pattern="[\u4e00-\u9fa5]*"
+          placeholder="Input an invalid name, e.g, Yulei"
+          validationMessage={{
+            patternMismatch: "Invalid Chinese name",
+          }}
+        />
+      </div>
     </Card>
   </TabItem>
   <TabItem label="Code">
-    ```jsx
+    ```tsx
     <FormInput
       label="Chinese Name"
       pattern="[\u4e00-\u9fa5]*"
@@ -131,21 +142,23 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
 <Tabs>
   <TabItem label="Preview">
     <Card>
-      <FormInput
-        client:load
-        label="Password"
-        type="password"
-        minLength={6}
-        maxLength={20}
-        placeholder="The length of your password should between 6 to 20"
-        validationMessage={{
-          tooShort: "Too short",
-        }}
-      />
+      <div class="not-content">
+        <FormInput
+          client:load
+          label="Password"
+          type="password"
+          minLength={6}
+          maxLength={20}
+          placeholder="The length of your password should between 6 to 20"
+          validationMessage={{
+            tooShort: "Too short",
+          }}
+        />
+      </div>
     </Card>
   </TabItem>
   <TabItem label="Code">
-    ```jsx
+    ```tsx
     <FormInput
       label="Password"
       type="password"
@@ -166,22 +179,24 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
 <Tabs>
   <TabItem label="Preview">
     <Card>
-      <FormInput
-        client:load
-        label="Quantity"
-        type="number"
-        min={1}
-        max={5}
-        placeholder="Quantity (between 1 and 5)"
-        validationMessage={{
-          rangeUnderflow: 'The minimum number is 1',
-          rangeOverflow:'The maximum number is 5'
-        }}
-      />
+      <div class="not-content">
+        <FormInput
+          client:load
+          label="Quantity"
+          type="number"
+          min={1}
+          max={5}
+          placeholder="Quantity (between 1 and 5)"
+          validationMessage={{
+            rangeUnderflow: 'The minimum number is 1',
+            rangeOverflow:'The maximum number is 5'
+          }}
+        />
+      </div>
     </Card>
   </TabItem>
   <TabItem label="Code">
-    ```jsx
+    ```tsx
     <FormInput
       label="Quantity"
       type="number"
@@ -203,37 +218,13 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
 <Tabs>
   <TabItem label="Preview">
     <Card>
-      <ApiCallingValidation client:load />
+      <div class="not-content">
+        <ApiCallingValidation client:load />
+      </div>
     </Card>
   </TabItem>
   <TabItem label="Code">
-    ```jsx
-    const inputRef = useRef<InputImperativeHandle>(null);
-    const [isCheckingEmail, setIsCheckingEmail] = useState(false);
-
-    const handleBlurEmail = async (email: string) => {
-      if (!email) return;
-
-      setIsCheckingEmail(true);
-      // Mock request
-      setTimeout(() => {
-        // Suppose request failed since the email is already used
-        setIsCheckingEmail(false);
-        inputRef.current?.setErrorMessage("This email address is already used");
-      }, 3000);
-    };
-
-    return (
-      <FormInput
-        ref={inputRef}
-        label="Email"
-        placeholder="Input an email, then blur"
-        loading={isCheckingEmail}
-        onBlur={(e) => handleBlurEmail(e.currentTarget.value)}
-      />
-    );
-    ```
-
+    <Code code={ApiCallingValidationRaw} lang="tsx" />
   </TabItem>
 </Tabs>
 
@@ -242,39 +233,15 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
 <Tabs>
   <TabItem label="Preview">
     <Card>
-      <Controlled client:load />
+      <div class="not-content">
+        <div class="not-content">
+          <Controlled client:load />
+        </div>
+      </div>
     </Card>
   </TabItem>
   <TabItem label="Code">
-    ```jsx
-    const [email1, setEmail1] = useState("");
-    const [email2, setEmail2] = useState("deafult@gamil.com");
-
-    return (
-      <>
-        <div>
-          <FormInput
-            label="Email"
-            placeholder="Email"
-            value={email1}
-            onChange={(e) => setEmail1(e.target.value)}
-          />
-          <p>Email: {email1}</p>
-        </div>
-
-        <div>
-          <FormInput
-            label="Email"
-            placeholder="Email"
-            value={email2}
-            onChange={(e) => setEmail2(e.target.value)}
-          />
-          <p>Email: {email2}</p>
-        </div>
-      </>
-    );
-    ```
-
+    <Code code={ControlledRaw} lang="tsx" />
   </TabItem>
 </Tabs>
 
@@ -283,47 +250,12 @@ import Uncontrolled from "@/example/form-input/Uncontrolled";
 <Tabs>
   <TabItem label="Preview">
     <Card>
-      <Uncontrolled client:load />
+      <div class="not-content">
+        <Uncontrolled client:load />
+      </div>
     </Card>
   </TabItem>
   <TabItem label="Code">
-    ```jsx
-    const [formDataObj, setFormDataObj] =
-      useState<Record<string, FormDataEntryValue>>();
-
-    const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-      event.preventDefault();
-
-      const formData = new FormData(event.currentTarget);
-      const updates = Object.fromEntries(formData);
-
-      setFormDataObj(updates);
-    };
-
-    return (
-      <form onSubmit={handleSubmit}>
-        <FormInput
-          required
-          defaultValue="default@gmail.com"
-          name="email"
-          label="Email"
-          placeholder="Email"
-        />
-        <FormInput
-          required
-          name="password"
-          type="password"
-          label="Password"
-          placeholder="Password"
-        />
-        <button type="submit" className="border">
-          Click here to submit (or press "Enter")
-        </button>
-
-        <p>formDataObj: {JSON.stringify(formDataObj)}</p>
-      </form>
-    );
-    ```
-
+    <Code code={UncontrolledRaw} lang="tsx" />
   </TabItem>
 </Tabs>

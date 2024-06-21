@@ -1,12 +1,12 @@
-import FormSelect from "@/components/FormSelect";
 import { useState } from "react";
+import FormSelect from "@/components/FormSelect";
 
 const Controlled = () => {
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("3");
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <div>
         <FormSelect
           label="Month of Birth"
@@ -56,7 +56,7 @@ const Controlled = () => {
 
         <p>Select: {value2}</p>
       </div>
-    </>
+    </div>
   );
 };
 

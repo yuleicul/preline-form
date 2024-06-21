@@ -1,5 +1,5 @@
-import FormInput from "@/components/FormInput";
 import { useState, type FormEventHandler } from "react";
+import FormInput from "@/components/FormInput";
 
 const Uncontrolled = () => {
   const [formDataObj, setFormDataObj] =
@@ -15,7 +15,7 @@ const Uncontrolled = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <FormInput
         required
         defaultValue="default@gmail.com"

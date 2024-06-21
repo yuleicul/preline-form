@@ -1,5 +1,5 @@
-import FormSelect from "@/components/FormSelect";
 import { useState, type FormEventHandler } from "react";
+import FormSelect from "@/components/FormSelect";
 
 const Uncontrolled = () => {
   const [formDataObj, setFormDataObj] =
@@ -15,7 +15,7 @@ const Uncontrolled = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <FormSelect
         required
         name="monthOfBirth"
@@ -43,7 +43,7 @@ const Uncontrolled = () => {
         options={[
           { label: "Coffee", value: "coffee" },
           { label: "Tea", value: "tea" },
-          { label: "Other", value: "other" },
+          { label: "Others", value: "others" },
         ]}
       />
       <button type="submit" className="border">

@@ -1,5 +1,5 @@
-import Checkbox from "@/components/Checkbox";
 import { useState, type FormEventHandler } from "react";
+import Checkbox from "@/components/Checkbox";
 
 const UncontrolledWithCustomValue = () => {
   const [formDataObj, setFormDataObj] =
@@ -15,7 +15,7 @@ const UncontrolledWithCustomValue = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <Checkbox
         required
         value="yes"

@@ -1,5 +1,5 @@
-import Checkbox from "@/components/Checkbox";
 import { useState, type FormEventHandler } from "react";
+import Checkbox from "@/components/Checkbox";
 
 const Uncontrolled = () => {
   const [formDataObj, setFormDataObj] =
@@ -15,7 +15,7 @@ const Uncontrolled = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <Checkbox
         required
         name="statementReadToggle"

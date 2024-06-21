@@ -1,12 +1,12 @@
-import Checkbox from "@/components/Checkbox";
 import { useState } from "react";
+import Checkbox from "@/components/Checkbox";
 
 const ControlledWithChecked = () => {
   const [checked1, setChecked1] = useState<boolean>();
   const [checked2, setChecked2] = useState(true);
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <div>
         <Checkbox
           checked={checked1}
@@ -26,7 +26,7 @@ const ControlledWithChecked = () => {
 
         <p>Checked: {JSON.stringify(checked2)}</p>
       </div>
-    </>
+    </div>
   );
 };
 
