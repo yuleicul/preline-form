@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FormSelect from "@/components/FormSelect";
+import FormSelect from "@/ui/FormSelect";
 
 const Controlled = () => {
   const [value1, setValue1] = useState("");

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import FormInput, { type InputImperativeHandle } from "@/components/FormInput";
+import FormInput, { type InputImperativeHandle } from "@/ui/FormInput";
 
 const ApiCallingValidation = () => {
   const inputRef = useRef<InputImperativeHandle>(null);

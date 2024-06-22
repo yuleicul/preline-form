@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CheckboxGroup from "@/components/CheckboxGroup";
+import CheckboxGroup from "@/ui/CheckboxGroup";
 
 const Controlled = () => {
   const [value1, setValue1] = useState<string[]>([]);

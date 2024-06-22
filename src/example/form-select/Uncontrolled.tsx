@@ -1,5 +1,5 @@
 import { useState, type FormEventHandler } from "react";
-import FormSelect from "@/components/FormSelect";
+import FormSelect from "@/ui/FormSelect";
 
 const Uncontrolled = () => {
   const [formDataObj, setFormDataObj] =

@@ -1,5 +1,5 @@
 import { useState, type FormEventHandler } from "react";
-import FormInput from "@/components/FormInput";
+import FormInput from "@/ui/FormInput";
 
 const Uncontrolled = () => {
   const [formDataObj, setFormDataObj] =

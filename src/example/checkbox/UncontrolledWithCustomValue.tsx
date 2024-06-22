@@ -1,5 +1,5 @@
 import { useState, type FormEventHandler } from "react";
-import Checkbox from "@/components/Checkbox";
+import Checkbox from "@/ui/Checkbox";
 
 const UncontrolledWithCustomValue = () => {
   const [formDataObj, setFormDataObj] =

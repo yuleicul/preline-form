@@ -1,6 +1,6 @@
 import { useState, type FormEventHandler } from "react";
 import _ from "lodash";
-import CheckboxGroup from "@/components/CheckboxGroup";
+import CheckboxGroup from "@/ui/CheckboxGroup";
 
 const Uncontrolled = () => {
   const [formDataObj, setFormDataObj] =

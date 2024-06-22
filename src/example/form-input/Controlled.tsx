@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FormInput from "@/components/FormInput";
+import FormInput from "@/ui/FormInput";
 
 const Controlled = () => {
   const [email1, setEmail1] = useState("");
