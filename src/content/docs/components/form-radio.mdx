@@ -90,7 +90,6 @@ import PrelineAstro from "@/ui/Preline.astro";
   <TabItem label="Code">
     ```jsx
     <FormRadio
-      client:load
       disabled={true}
       name="picked"
       label="Pick what you like"
@@ -106,6 +105,40 @@ import PrelineAstro from "@/ui/Preline.astro";
           label: "Others",
         },
       ]}
+    />
+    ```
+  </TabItem>
+</Tabs>
+
+### One-line layout
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <div class="not-content">
+        <FormRadio
+          client:load
+          name="picked"
+          label="Is it true that you're so cool that ice cubes are jealous of you?"
+          options={[
+            { value: true, label: "Yes" },
+            { value: false, label: "No" },
+          ]}
+          className="radio-horizontal"
+        />
+      </div>
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx "className="radio-horizontal""
+    <FormRadio
+      name="picked"
+      label="Is it true that you're so cool that ice cubes are jealous of you?"
+      options={[
+        { value: true, label: "Yes" },
+        { value: false, label: "No" },
+      ]}
+      className="radio-horizontal"
     />
     ```
   </TabItem>
