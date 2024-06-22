@@ -1,29 +1,27 @@
-import {
-  type InputHTMLAttributes,
-  type ReactElement,
-  useRef,
-  useId,
-  useState,
-} from "react";
+import { type InputHTMLAttributes, useId, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { Calendar } from "lucide-react";
 import usePrelineEffect from "@/hooks/usePrelineEffect";
 import { formatDateString } from "@/utils/utils";
 import useValidityEffect, {
   type ValidationMessage,
 } from "@/hooks/useValidityEffect";
 
-import IconDownArrow from "./dynamic-icons/IconDownArrow";
 import Datepicker, { type Month } from "./Datepicker";
 
 type FormDatepickerProps<TName> = {
   name?: TName;
+  /** Format: YYYY-MM-DD */
+  value?: string;
+  /** Format: YYYY-MM-DD */
+  defaultValue?: string;
   label?: string;
   placeholder?: string;
   className?: string;
   dropDownToggleButtonClassName?: string;
   dropDownMenuClassName?: string;
-  icon?: ReactElement | null;
   validationMessage?: ValidationMessage;
+  onChange?: (value: string) => void;
 };
 
 const FormDatepicker = <TName extends string = string>({
@@ -32,19 +30,26 @@ const FormDatepicker = <TName extends string = string>({
   className,
   dropDownToggleButtonClassName,
   dropDownMenuClassName,
-  icon,
   validationMessage,
+  value,
+  defaultValue,
+  onChange,
 
   // HTMLInputElement props
   name,
-  defaultValue, // The format in Date Input element is `YYYY-MM-DD`
   accept,
   size,
   required,
   onInvalid,
   ...inputProps
-}: FormDatepickerProps<TName> & InputHTMLAttributes<HTMLInputElement>) => {
+}: FormDatepickerProps<TName> &
+  Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    "value" | "defaultValue" | "onChange"
+  >) => {
   usePrelineEffect();
+
+  const isControlled = value !== undefined;
 
   const { ErrorMessage, errorMessage, setErrorMessage, handleInvalid } =
     useValidityEffect({
@@ -54,13 +59,12 @@ const FormDatepicker = <TName extends string = string>({
       onInvalid,
     });
 
-  const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
 
   const [
-    dateDisplay = defaultValue
-      ? formatDateString(defaultValue as string)
-      : placeholder,
+    dateDisplay = isControlled
+      ? formatDateString(value)
+      : formatDateString(defaultValue),
     setDateDisplay,
   ] = useState<string>(); // `DD/MM/YYYY`
 
@@ -76,6 +80,8 @@ const FormDatepicker = <TName extends string = string>({
     dateInputElement.value = date;
     setDateDisplay(formatDateString(date));
     setErrorMessage("");
+
+    onChange?.(date);
   };
 
   return (
@@ -90,6 +96,7 @@ const FormDatepicker = <TName extends string = string>({
       <div className="hs-dropdown [--placement:bottom-left] [--strategy:absolute] [--auto-close:inside] flex relative">
         <button
           type="button"
+          disabled={inputProps.disabled}
           className={twMerge(
             "hs-dropdown-toggle flex items-center justify-between gap-x-2 py-3.5 px-4 w-full rounded-lg text-[15px] shadow-sm border border-gray-200",
             errorMessage
@@ -99,13 +106,8 @@ const FormDatepicker = <TName extends string = string>({
             dropDownToggleButtonClassName
           )}
         >
-          {dateDisplay}
-
-          {icon === undefined ? (
-            <IconDownArrow className="hs-dropdown-open:rotate-180 size-4" />
-          ) : (
-            icon
-          )}
+          {dateDisplay || placeholder}
+          <Calendar className="size-4" />
         </button>
 
         <div
@@ -124,13 +126,19 @@ const FormDatepicker = <TName extends string = string>({
       <input
         {...inputProps}
         required={required}
+        value={value}
         defaultValue={defaultValue}
         id={inputId}
-        ref={inputRef}
         type="date"
         className="hidden"
         name={name}
         onInvalid={handleInvalid}
+        // HACK: a fake `onChange` to skip the warning:
+        //    Warning: You provided a `value` prop to a form field without an `onChange` handler.
+        //    This will render a read-only field. If the field should be mutable use `defaultValue`.
+        //    Otherwise, set either `onChange` or `readOnly`.
+        // NOTE: `readOnly` will disable `required`
+        onChange={() => {}}
       />
 
       <ErrorMessage />

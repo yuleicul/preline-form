@@ -73,7 +73,7 @@ const CheckboxGroup = <TName extends string = string>({
         <label className="block text-sm font-semibold mb-2.5">{label}</label>
       )}
 
-      <fieldset className={twMerge("flex gap-3", fieldsetClassName)}>
+      <fieldset className={twMerge("flex gap-3 flex-wrap", fieldsetClassName)}>
         {options.map((option, index) => (
           <div className="flex" key={option.label}>
             <Checkbox

@@ -88,30 +88,28 @@ const Datepicker = ({ onChange }: DatepickerProps) => {
 
         {/* Month / Year */}
         <div className="col-span-3 flex justify-center items-center gap-x-1">
-          <div className="relative">
-            <FormSelect
-              value={selectedMonth}
-              options={[
-                // TODO: i18n
-                { label: "January", value: Month.JAN },
-                { label: "February", value: Month.FEB },
-                { label: "March", value: Month.MAR },
-                { label: "April", value: Month.APR },
-                { label: "May", value: Month.MAY },
-                { label: "June", value: Month.JUN },
-                { label: "July", value: Month.JUL },
-                { label: "August", value: Month.AUG },
-                { label: "September", value: Month.SEP },
-                { label: "October", value: Month.OCT },
-                { label: "November", value: Month.NOV },
-                { label: "December", value: Month.DEC },
-              ]}
-              onChange={(value) => setSelectedMonth(value)}
-              dropDownToggleButtonClassName="border-none shadow-none"
-              dropDownMenuClassName="max-h-80 overflow-auto"
-              icon={null}
-            />
-          </div>
+          <FormSelect
+            value={selectedMonth}
+            options={[
+              // TODO: i18n
+              { label: "January", value: Month.JAN },
+              { label: "February", value: Month.FEB },
+              { label: "March", value: Month.MAR },
+              { label: "April", value: Month.APR },
+              { label: "May", value: Month.MAY },
+              { label: "June", value: Month.JUN },
+              { label: "July", value: Month.JUL },
+              { label: "August", value: Month.AUG },
+              { label: "September", value: Month.SEP },
+              { label: "October", value: Month.OCT },
+              { label: "November", value: Month.NOV },
+              { label: "December", value: Month.DEC },
+            ]}
+            onChange={(value) => setSelectedMonth(value)}
+            dropDownToggleButtonClassName="border-none shadow-none"
+            dropDownMenuClassName="max-h-60 overflow-auto"
+            icon={null}
+          />
 
           <span className="text-gray-400">/</span>
 
@@ -123,7 +121,7 @@ const Datepicker = ({ onChange }: DatepickerProps) => {
             }))}
             onChange={(value) => setSelectedYear(value)}
             dropDownToggleButtonClassName="border-none shadow-none"
-            dropDownMenuClassName="max-h-80 overflow-auto"
+            dropDownMenuClassName="max-h-60 overflow-auto"
             icon={null}
           />
         </div>
@@ -133,7 +131,7 @@ const Datepicker = ({ onChange }: DatepickerProps) => {
           <button
             type="button"
             disabled={selectedYear === END_YEAR && selectedMonth === Month.DEC}
-            className="size-8 flex justify-center items-center  hover:bg-gray-100 rounded-full disabled:opacity-50 disabled:pointer-events-none"
+            className="size-8 flex justify-center items-center hover:bg-gray-100 rounded-full disabled:opacity-50 disabled:pointer-events-none"
             onClick={clickNextMonth}
           >
             <ChevronRight className="flex-shrink-0 size-4" />
@@ -155,7 +153,7 @@ const Datepicker = ({ onChange }: DatepickerProps) => {
             <button
               key={day}
               type="button"
-              className="m-px size-10 flex justify-center items-center border border-transparent text-sm  hover:border-ft-brand hover:text-ft-brand rounded-full disabled:text-gray-300 disabled:pointer-events-none"
+              className="m-px size-10 flex justify-center items-center border border-transparent text-sm hover:border-ft-brand hover:text-ft-brand rounded-full disabled:text-gray-300 disabled:pointer-events-none"
               onClick={() => handleClickDay(day)}
             >
               {day}

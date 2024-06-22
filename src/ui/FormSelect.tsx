@@ -116,7 +116,7 @@ const FormSelect = <
             dropDownToggleButtonClassName
           )}
         >
-          <div className="w-24 text-ellipsis overflow-hidden whitespace-nowrap text-left">
+          <div className="text-ellipsis overflow-hidden whitespace-nowrap">
             {isControlled
               ? getLabel(value)
               : selectedOptionLabel || placeholder || "Please select"}

@@ -1,0 +1,79 @@
+---
+title: FormDatepicker
+---
+
+import { Tabs, TabItem, Card, Code } from "@astrojs/starlight/components";
+import Checkbox from "@/ui/Checkbox";
+import CheckboxGroup from "@/ui/CheckboxGroup";
+import FormDatepicker from "@/ui/FormDatepicker";
+import Controlled from "@/example/form-datepicker/Controlled";
+import ControlledRaw from "@/example/form-datepicker/Controlled?raw";
+import Uncontrolled from "@/example/form-datepicker/Uncontrolled";
+import UncontrolledRaw from "@/example/form-datepicker/Uncontrolled?raw";
+import PrelineAstro from "@/ui/Preline.astro";
+
+<PrelineAstro client:load />
+
+## Basic
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <div class="not-content">
+        <FormDatepicker client:load label="Date of birth" />
+      </div>
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <FormDatepicker label="Date of birth" />
+    ```
+  </TabItem>
+</Tabs>
+
+### Disabled
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <div class="not-content">
+        <FormDatepicker client:load disabled={true} label="Date of birth" />
+      </div>
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    ```jsx
+    <FormDatepicker disabled={true} label="Date of birth" />
+    ```
+  </TabItem>
+</Tabs>
+
+## Controlled
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <div class="not-content">
+        <Controlled client:load />
+      </div>
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    <Code code={ControlledRaw} lang="tsx" />
+  </TabItem>
+</Tabs>
+
+## Uncontrolled (with `<form>`)
+
+<Tabs>
+  <TabItem label="Preview">
+    <Card>
+      <div class="not-content">
+        <Uncontrolled client:load />
+      </div>
+    </Card>
+  </TabItem>
+  <TabItem label="Code">
+    <Code code={UncontrolledRaw} lang="tsx" />
+  </TabItem>
+</Tabs>
