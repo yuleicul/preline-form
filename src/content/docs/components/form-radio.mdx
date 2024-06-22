@@ -1,13 +1,13 @@
 ---
-title: CheckboxGroup
+title: FormRadio
 ---
 
 import { Tabs, TabItem, Card, Code } from "@astrojs/starlight/components";
-import CheckboxGroup from "@/ui/CheckboxGroup";
-import Controlled from "@/example/checkbox-group/Controlled";
-import ControlledRaw from "@/example/checkbox-group/Controlled?raw";
-import Uncontrolled from "@/example/checkbox-group/Uncontrolled";
-import UncontrolledRaw from "@/example/checkbox-group/Uncontrolled?raw";
+import FormRadio from "@/ui/FormRadio";
+import Controlled from "@/example/form-radio/Controlled";
+import ControlledRaw from "@/example/form-radio/Controlled?raw";
+import Uncontrolled from "@/example/form-radio/Uncontrolled";
+import UncontrolledRaw from "@/example/form-radio/Uncontrolled?raw";
 import PrelineAstro from "@/ui/Preline.astro";
 
 <PrelineAstro client:load />
@@ -18,8 +18,9 @@ import PrelineAstro from "@/ui/Preline.astro";
   <TabItem label="Preview">
     <Card>
       <div class="not-content">
-        <CheckboxGroup
+        <FormRadio
           client:load
+          name="picked"
           label="Pick what you like"
           options={[
             { value: "apple", label: "Apple" },
@@ -38,8 +39,9 @@ import PrelineAstro from "@/ui/Preline.astro";
     </Card>
   </TabItem>
   <TabItem label="Code">
-    ```jsx
-    <CheckboxGroup
+    ```jsx "name="picked"
+    <FormRadio
+      name="picked"
       label="Pick what you like"
       options={[
         { value: "apple", label: "Apple" },
@@ -64,9 +66,10 @@ import PrelineAstro from "@/ui/Preline.astro";
   <TabItem label="Preview">
     <Card>
       <div class="not-content">
-        <CheckboxGroup
+        <FormRadio
           client:load
           disabled={true}
+          name="picked"
           label="Pick what you like"
           options={[
             { value: "apple", label: "Apple" },
@@ -86,8 +89,10 @@ import PrelineAstro from "@/ui/Preline.astro";
   </TabItem>
   <TabItem label="Code">
     ```jsx
-    <CheckboxGroup
+    <FormRadio
+      client:load
       disabled={true}
+      name="picked"
       label="Pick what you like"
       options={[
         { value: "apple", label: "Apple" },

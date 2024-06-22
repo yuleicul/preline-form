@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .radio-horizontal {
+    @apply grid grid-cols-[auto_130px] gap-x-4;
+  }
+}

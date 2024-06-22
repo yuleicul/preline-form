@@ -1,4 +1,4 @@
-import { type InputHTMLAttributes, useId, useState } from "react";
+import { type InputHTMLAttributes, useId, useState, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import { Calendar } from "lucide-react";
 import usePrelineEffect from "@/hooks/usePrelineEffect";
@@ -49,8 +49,7 @@ const FormDatepicker = <TName extends string = string>({
   >) => {
   usePrelineEffect();
 
-  const isControlled = value !== undefined;
-
+  const inputId = useId();
   const { ErrorMessage, errorMessage, setErrorMessage, handleInvalid } =
     useValidityEffect({
       name,
@@ -59,14 +58,15 @@ const FormDatepicker = <TName extends string = string>({
       onInvalid,
     });
 
-  const inputId = useId();
+  const isControlled = value !== undefined;
+  const [dateDisplay, setDateDisplay] = useState<string>(); // `DD/MM/YYYY`
 
-  const [
-    dateDisplay = isControlled
+  useEffect(() => {
+    const selectedDateDisplay = isControlled
       ? formatDateString(value)
-      : formatDateString(defaultValue),
-    setDateDisplay,
-  ] = useState<string>(); // `DD/MM/YYYY`
+      : formatDateString(defaultValue);
+    setDateDisplay(selectedDateDisplay);
+  }, [defaultValue, isControlled, value]);
 
   const handleClickDay = (year: number, month: Month, day: number) => {
     const formattedMonth = String(month + 1).padStart(2, "0");
@@ -78,9 +78,11 @@ const FormDatepicker = <TName extends string = string>({
       inputId
     )! as HTMLInputElement;
     dateInputElement.value = date;
-    setDateDisplay(formatDateString(date));
-    setErrorMessage("");
+    if (!isControlled) {
+      setDateDisplay(formatDateString(date));
+    }
 
+    setErrorMessage("");
     onChange?.(date);
   };
 
