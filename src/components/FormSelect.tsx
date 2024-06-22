@@ -5,7 +5,8 @@ import {
   useId,
   useState,
 } from "react";
-// import usePrelineEffect from "@/hooks/usePrelineEffect";
+import IconDownArrow from "@/ui/dynamic-icons/IconDownArrow";
+import usePrelineEffect from "@/hooks/usePrelineEffect";
 import useValidityEffect, {
   type ValidationMessage,
 } from "@/hooks/useValidityEffect";
@@ -55,13 +56,13 @@ const FormSelect = <
   ...selectProps
 }: FormSelectProps<TName, TValue> &
   Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange">) => {
-  //   usePrelineEffect();
+  usePrelineEffect();
   const selectId = useId();
 
   const { ErrorMessage, errorMessage, setErrorMessage, handleInvalid } =
     useValidityEffect({
       name,
-      required,
+      dep: { required },
       validationMessage,
       onInvalid,
     });
@@ -121,20 +122,7 @@ const FormSelect = <
               : selectedOptionLabel || placeholder || "Please select"}
           </div>
           {icon === undefined ? (
-            <svg
-              className="hs-dropdown-open:rotate-180 size-4"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m6 9 6 6 6-6"></path>
-            </svg>
+            <IconDownArrow className="hs-dropdown-open:rotate-180 size-4" />
           ) : (
             icon
           )}

@@ -16,6 +16,8 @@ type FormInputProps<TName> = {
   inputClassName?: string;
   loading?: boolean;
   name?: TName;
+  manualErrorMessage?: string;
+  originalValue?: string;
 };
 
 export type InputImperativeHandle = {
@@ -32,6 +34,7 @@ const FormInput = <TName extends string = string>(
     validationMessage,
     inputClassName,
     loading,
+    manualErrorMessage,
 
     // HTMLInputElement props
     name,
@@ -51,7 +54,7 @@ const FormInput = <TName extends string = string>(
     handleInvalid,
   } = useValidityEffect({
     name,
-    required,
+    dep: { required, pattern: otherInputProps.pattern },
     validationMessage,
     onBlur,
     onInvalid,
@@ -84,6 +87,7 @@ const FormInput = <TName extends string = string>(
           {required && <span className="text-teal-600">*</span>}
         </label>
       )}
+
       <div className="flex items-center relative">
         <input
           {...otherInputProps}

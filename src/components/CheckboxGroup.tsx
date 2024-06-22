@@ -1,11 +1,13 @@
 import { type InputHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
+import usePrelineEffect from "@/hooks/usePrelineEffect";
 import useValidityEffect, {
   type ValidationMessage,
 } from "@/hooks/useValidityEffect";
 import Checkbox from "./Checkbox";
 
-type Value = string | number;
+// NOTE: HTML checkbox's value is alway string.
+type Value = string;
 
 type OptionData = {
   label: string;
@@ -22,7 +24,7 @@ type Props<TName> = {
   fieldsetClassName?: string;
   optionClassName?: string;
   validationMessage?: ValidationMessage;
-  onChange?: (value: Value, checked: boolean) => void;
+  onChange?: (value: Value[]) => void;
 };
 
 const CheckboxGroup = <TName extends string = string>({
@@ -38,17 +40,17 @@ const CheckboxGroup = <TName extends string = string>({
 
   // HTMLInputElement props
   name,
-  required,
   onInvalid,
   ...otherInputProps
 }: Props<TName> &
   Omit<
     InputHTMLAttributes<HTMLInputElement>,
-    "onChange" | "value" | "defaultValue"
+    "onChange" | "value" | "defaultValue" | "required" // NOTE: 'required' is not supported
   >) => {
+  usePrelineEffect();
+
   const { ErrorMessage, setErrorMessage, handleInvalid } = useValidityEffect({
     name,
-    required,
     validationMessage,
     onInvalid,
   });
@@ -56,13 +58,19 @@ const CheckboxGroup = <TName extends string = string>({
   const isControlled = value !== undefined;
   const hasDefaultValue = defaultValue !== undefined;
 
+  const handleCheck = (optionValue: Value, checked: boolean) => {
+    setErrorMessage("");
+    if (checked) {
+      onChange?.((value || []).concat([optionValue]));
+    } else {
+      onChange?.((value || []).filter((v) => v !== optionValue));
+    }
+  };
+
   return (
     <div className={twMerge(className)}>
       {label && (
-        <label className="block text-sm font-semibold mb-2.5">
-          {label}
-          {required && <span className="text-teal-600">*</span>}
-        </label>
+        <label className="block text-sm font-semibold mb-2.5">{label}</label>
       )}
 
       <fieldset className={twMerge("flex gap-3", fieldsetClassName)}>
@@ -73,9 +81,6 @@ const CheckboxGroup = <TName extends string = string>({
               id={`${name}-${option.value}`}
               name={`${name}.${index}`}
               label={option.label}
-              // NOTE: HTML checkbox's value is alway string.
-              //       We can use `onChange` to get the boolean value, but the form data is alway string.
-              // @ts-ignore
               value={option.value}
               defaultChecked={
                 hasDefaultValue
@@ -83,11 +88,7 @@ const CheckboxGroup = <TName extends string = string>({
                   : undefined
               }
               checked={isControlled ? value.includes(option.value) : undefined}
-              required={required}
-              onChange={(e) => {
-                setErrorMessage("");
-                onChange?.(option.value, e.target.checked);
-              }}
+              onChange={(e) => handleCheck(option.value, e.target.checked)}
               onInvalid={handleInvalid}
             />
           </div>

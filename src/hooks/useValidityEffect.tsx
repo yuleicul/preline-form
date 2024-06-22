@@ -23,9 +23,14 @@ export const VALIDITY_STATES: Array<keyof ValidityState> = [
 
 export type ValidationMessage = Partial<Record<keyof ValidityState, string>>;
 
+type Dependency = {
+  required?: boolean;
+  pattern?: string;
+};
+
 type Props = {
   name?: string;
-  required?: boolean;
+  dep?: Dependency;
   validationMessage?: ValidationMessage;
   validationMessageClassName?: string;
   onInvalid?: FormEventHandler<HTMLInputElement | HTMLSelectElement>;
@@ -34,7 +39,7 @@ type Props = {
 
 const useValidityEffect = ({
   name,
-  required,
+  dep,
   validationMessage,
   validationMessageClassName,
   onInvalid,
@@ -57,7 +62,7 @@ const useValidityEffect = ({
     if (validationMessage?.[validityState]) {
       setErrorMessage(validationMessage[validityState]!);
     } else if (validityState === "valueMissing") {
-      setErrorMessage("Please fill in the mandatory field");
+      setErrorMessage("Please fill in the mandatory field.");
     } else {
       console.warn(`Please set validationMessage.${validityState} for ${name}`);
     }
@@ -75,13 +80,14 @@ const useValidityEffect = ({
   };
 
   useEffect(() => {
-    if (!required) {
+    if (errorMessage) {
       const isValid = targetRef.current?.checkValidity();
       if (isValid) {
         setErrorMessage("");
       }
     }
-  }, [required]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dep?.required, dep?.pattern]);
 
   const ErrorMessage = () => {
     return (
