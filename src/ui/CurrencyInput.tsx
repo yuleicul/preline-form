@@ -5,11 +5,20 @@ import {
   useImperativeHandle,
   useRef,
   useId,
+  useState,
 } from "react";
+import CurrencyInputField, {
+  type CurrencyInputProps,
+} from "react-currency-input-field";
 import { twMerge } from "tailwind-merge";
+import { Info } from "lucide-react";
 import useValidityEffect, {
   type ValidationMessage,
 } from "@/hooks/useValidityEffect";
+
+const DEFAULT_PLACEHOLDER = "$10,000";
+const DEFAULT_CURRENCY = "HK";
+const DEFAULT_CURRENCY_PREFIX = "$";
 
 type FormInputProps<TName> = {
   label?: string;
@@ -19,6 +28,7 @@ type FormInputProps<TName> = {
   name?: TName;
   manualErrorMessage?: string;
   originalValue?: string;
+  currency?: string;
 };
 
 export type InputImperativeHandle = {
@@ -26,7 +36,7 @@ export type InputImperativeHandle = {
   setErrorMessage: (message: string) => void;
 };
 
-const FormInput = <TName extends string = string>(
+const CurrencyInput = <TName extends string = string>(
   {
     children,
     // Component props
@@ -36,15 +46,22 @@ const FormInput = <TName extends string = string>(
     inputClassName,
     loading,
     manualErrorMessage,
+    prefix = DEFAULT_CURRENCY_PREFIX,
+    currency = DEFAULT_CURRENCY,
+    onValueChange,
 
     // HTMLInputElement props
     name,
     id,
     required,
+    min,
+    max,
     onInvalid,
     onBlur,
     ...otherInputProps
-  }: InputHTMLAttributes<HTMLInputElement> & FormInputProps<TName>,
+  }: InputHTMLAttributes<HTMLInputElement> &
+    FormInputProps<TName> &
+    CurrencyInputProps,
   ref: ForwardedRef<InputImperativeHandle>
 ) => {
   const randomId = useId();
@@ -64,6 +81,22 @@ const FormInput = <TName extends string = string>(
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [infoMessage, setInfoMessage] = useState("");
+
+  const handleOnValueChange: CurrencyInputProps["onValueChange"] = (
+    value,
+    _name,
+    _formattedValueObject
+  ) => {
+    if (Number(value) > Number(max)) {
+      setInfoMessage(`Upper limit is ${currency}${prefix}${max}`);
+    } else {
+      setInfoMessage("");
+    }
+
+    onValueChange?.(value, _name, _formattedValueObject);
+  };
 
   useImperativeHandle(
     ref,
@@ -95,10 +128,17 @@ const FormInput = <TName extends string = string>(
       )}
 
       <div className="flex items-center relative">
-        <input
+        {/* Docs: https://cchanxzy.github.io/react-currency-input-field/ */}
+        <CurrencyInputField
+          prefix="$"
+          placeholder={DEFAULT_PLACEHOLDER}
           {...otherInputProps}
           ref={inputRef}
           id={id || randomId}
+          onInvalid={handleInvalid}
+          onBlur={handleBlur}
+          required={required}
+          name={name}
           className={twMerge(
             "py-3.5 px-4 block w-full rounded-lg text-[15px] shadow-sm",
             errorMessage
@@ -107,10 +147,7 @@ const FormInput = <TName extends string = string>(
             "disabled:text-gray-300 disabled:bg-slate-50 disabled:pointer-events-none",
             inputClassName
           )}
-          onInvalid={handleInvalid}
-          onBlur={handleBlur}
-          required={required}
-          name={name}
+          onValueChange={handleOnValueChange}
         />
 
         {loading && (
@@ -123,11 +160,19 @@ const FormInput = <TName extends string = string>(
       </div>
 
       <ErrorMessage />
+
+      {infoMessage && (
+        <p className="text-sm font-medium text-gray-500 mt-2.5 flex items-center gap-2">
+          <Info className="size-4" />
+          <span>{infoMessage}</span>
+        </p>
+      )}
     </div>
   );
 };
 
-export default forwardRef(FormInput) as <TName extends string = string>(
+export default forwardRef(CurrencyInput) as <TName extends string = string>(
   props: InputHTMLAttributes<HTMLInputElement> &
-    FormInputProps<TName> & { ref?: ForwardedRef<InputImperativeHandle> }
-) => ReturnType<typeof FormInput<TName>>;
+    FormInputProps<TName> &
+    CurrencyInputProps & { ref?: ForwardedRef<InputImperativeHandle> }
+) => ReturnType<typeof CurrencyInput<TName>>;

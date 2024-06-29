@@ -23,6 +23,7 @@
     "lucide-react": "^0.396.0",
     "preline": "^2.3.0",
     "react": "^18.3.1",
+    "react-currency-input-field": "^3.8.0",
     "react-dom": "^18.3.1",
     "sharp": "^0.32.5",
     "tailwind-merge": "^2.3.0",
